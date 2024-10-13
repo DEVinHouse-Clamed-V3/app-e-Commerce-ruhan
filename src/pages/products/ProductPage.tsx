@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, FlatList, Image, Button, StyleSheet } from 'react-native';
-import ProductCard from './ProductCard';
+import ProductCard from '../../component/ProductCard';
 
 const products = [
   { id: '1', name: 'Camisa', price: 29.99, image: 'https://esportelegal.fbitsstatic.net/img/p/camisa-umbro-avai-i-2023-24-juvenil-122854/439961-1.jpg?w=800&h=800&v=no-change&qs=ignore' },
