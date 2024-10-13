@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, FlatList, Image, Button, StyleSheet } from 'react-native';
 import ProductCard from '../../component/ProductCard';
+import { useNavigation } from '@react-navigation/native';
 
 const products = [
   { id: '1', name: 'Camisa', price: 29.99, image: 'https://esportelegal.fbitsstatic.net/img/p/camisa-umbro-avai-i-2023-24-juvenil-122854/439961-1.jpg?w=800&h=800&v=no-change&qs=ignore' },
@@ -12,6 +13,7 @@ const products = [
 
 const ProductPage = () => {
   const [cart, setCart] = useState([]);
+  const navigation = useNavigation();
 
   const handleAddCart = (item) => {
     setCart([...cart, item]); 
@@ -29,6 +31,7 @@ const ProductPage = () => {
 
   return (
     <View style={styles.container}>
+      <Button title="Ver Carrinho" onPress={() => navigation.navigate('CartPage')} />
       <FlatList
         data={products}
         renderItem={renderProduct}
