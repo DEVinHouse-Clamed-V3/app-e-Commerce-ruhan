@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, FlatList, Image, Button, StyleSheet } from 'react-native';
+import ProductCard from './ProductCard';
 
 const products = [
   { id: '1', name: 'Camisa', price: 29.99, image: 'https://esportelegal.fbitsstatic.net/img/p/camisa-umbro-avai-i-2023-24-juvenil-122854/439961-1.jpg?w=800&h=800&v=no-change&qs=ignore' },
@@ -18,12 +19,12 @@ const ProductPage = () => {
   };
 
   const renderProduct = ({ item }) => (
-    <View style={styles.card}>
-      <Image source={{ uri: item.image }} style={styles.image} />
-      <Text style={styles.name}>{item.name}</Text>
-      <Text style={styles.price}>R$ {item.price.toFixed(2)}</Text>
-      <Button title="Adicionar ao Carrinho" onPress={() => handleAddCart(item)} />
-    </View>
+    <ProductCard
+      name={item.name}
+      price={item.price}
+      image={item.image}
+      onAddToCart={() => handleAddCart(item)}
+    />
   );
 
   return (
@@ -42,33 +43,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     backgroundColor: '#f5f5f5',
-  },
-  card: {
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    padding: 16,
-    marginBottom: 16,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  image: {
-    width: 100,
-    height: 100,
-    marginBottom: 8,
-  },
-  name: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    marginBottom: 4,
-  },
-  price: {
-    fontSize: 16,
-    color: '#888',
-    marginBottom: 8,
   },
 });
 
