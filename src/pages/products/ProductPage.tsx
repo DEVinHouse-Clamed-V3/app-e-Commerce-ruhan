@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, FlatList, Image, Button, StyleSheet, TextInput } from 'react-native';
 import ProductCard from '../../component/ProductCard';
 import { useNavigation } from '@react-navigation/native';
+import { useCart } from '../../context/CartContext';
 
 const products = [
   { id: '1', name: 'Camisa', price: 29.99, image: 'https://esportelegal.fbitsstatic.net/img/p/camisa-umbro-avai-i-2023-24-juvenil-122854/439961-1.jpg?w=800&h=800&v=no-change&qs=ignore' },
@@ -12,6 +13,7 @@ const products = [
 ];
 
 const ProductPage = () => {
+  const { addToCart } = useCart();
   const [seachProduct, setSearchProduct] = useState('');
   const [filteredProducts, setFilteredProducts] = useState(products);
   const navigation = useNavigation();
@@ -28,7 +30,7 @@ const ProductPage = () => {
       name={item.name}
       price={item.price}
       image={item.image}
-      onAddToCart={() => alert(`${item.name} adicionado ao carrinho`)}
+      onAddToCart={() => addToCart(item)}
     />
   );
 
