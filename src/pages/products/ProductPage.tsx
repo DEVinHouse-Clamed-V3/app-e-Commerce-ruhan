@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, Image, Button, StyleSheet, TextInput } from 'react-native';
+import { View, Text, FlatList, Image, Button, StyleSheet, TextInput, Alert } from 'react-native';
 import ProductCard from '../../component/ProductCard';
 import { useNavigation } from '@react-navigation/native';
 import { useCart } from '../../context/CartContext';
@@ -25,18 +25,23 @@ const ProductPage = () => {
     setFilteredProducts(filtered);
   }, [seachProduct]);
 
+  const hendleAddToCart = (item) => {
+    Alert.alert('Produto adicionado', `${item.name} foi adicionado ao carrinho!`);
+    addToCart(item);
+  };
+
   const renderProduct = ({ item }) => (
     <ProductCard
       name={item.name}
       price={item.price}
       image={item.image}
-      onAddToCart={() => addToCart(item)}
+      onAddToCart={() => hendleAddToCart(item)}
     />
   );
 
   return (
     <View style={styles.container}>
-      <Button title="Ver Carrinho" onPress={() => navigation.navigate('CartPage')} />
+      <Button title="Ver Carrinho" onPress={() => navigation.navigate('CartPage')} color="#A91D3A"/>
       <TextInput
         style={styles.input}
         placeholder="Buscar produto"
@@ -56,13 +61,15 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#EEEEEE',
   },
   input: {
-    padding: 8,
+    padding: 12,
     marginVertical: 8,
-    backgroundColor: '#fff',
+    backgroundColor: '#FFF',
     borderRadius: 8,
+    borderColor: '#C73659',
+    borderWidth: 1,
   },
 });
 
