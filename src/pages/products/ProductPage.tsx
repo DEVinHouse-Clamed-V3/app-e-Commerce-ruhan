@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, Text, FlatList, Image, Button, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, Text, FlatList, Image, Button, StyleSheet, TextInput } from 'react-native';
 import ProductCard from '../../component/ProductCard';
 import { useNavigation } from '@react-navigation/native';
 
@@ -12,28 +12,37 @@ const products = [
 ];
 
 const ProductPage = () => {
-  const [cart, setCart] = useState([]);
+  const [seachProduct, setSearchProduct] = useState('');
+  const [filteredProducts, setFilteredProducts] = useState(products);
   const navigation = useNavigation();
 
-  const handleAddCart = (item) => {
-    setCart([...cart, item]); 
-    alert(`${item.name} adicionado ao carrinho!`);
-  };
+  useEffect(() => {
+    const filtered = products.filter((product) =>
+      product.name.toLowerCase().includes(seachProduct.toLowerCase())
+    );
+    setFilteredProducts(filtered);
+  }, [seachProduct]);
 
   const renderProduct = ({ item }) => (
     <ProductCard
       name={item.name}
       price={item.price}
       image={item.image}
-      onAddToCart={() => handleAddCart(item)}
+      onAddToCart={() => alert(`${item.name} adicionado ao carrinho`)}
     />
   );
 
   return (
     <View style={styles.container}>
       <Button title="Ver Carrinho" onPress={() => navigation.navigate('CartPage')} />
+      <TextInput
+        style={styles.input}
+        placeholder="Buscar produto"
+        value={seachProduct}
+        onChangeText={(text) => setSearchProduct(text)}
+      />
       <FlatList
-        data={products}
+        data={filteredProducts}
         renderItem={renderProduct}
         keyExtractor={(item) => item.id}
       />
@@ -46,6 +55,12 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     backgroundColor: '#f5f5f5',
+  },
+  input: {
+    padding: 8,
+    marginVertical: 8,
+    backgroundColor: '#fff',
+    borderRadius: 8,
   },
 });
 
